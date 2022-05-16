@@ -1,0 +1,35 @@
+{
+  "name": "easy-lowdb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.mjs",
+  "scripts": {
+    "test": "node src/test.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/hchk-utilities/easy-lowdb.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/hchk-utilities/easy-lowdb/issues"
+  },
+  "homepage": "https://gitlab.com/hchk-utilities/easy-lowdb#readme",
+  "dependencies": {
+    "lowdb": "^3.0.0"
+  },
+  "keywords": [
+    "database",
+    "db",
+    "electron",
+    "lowdb",
+    "embedded",
+    "flat",
+    "JSON",
+    "local",
+    "localStorage",
+    "easy",
+    "esm"
+  ]
+}
