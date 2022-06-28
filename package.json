@@ -1,6 +1,6 @@
 {
   "name": "easy-lowdb",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "src/index.mjs",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/hchk-utilities/easy-lowdb.git"
+    "url": "git+ssh://git@github.com:brianthompson-sarcat/easy-lowdb.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/hchk-utilities/easy-lowdb/issues"
+    "url": "https://github.com/brianthompson-sarcat/easy-lowdb/issues"
   },
-  "homepage": "https://gitlab.com/hchk-utilities/easy-lowdb#readme",
+  "homepage": "https://github.com/brianthompson-sarcat/easy-lowdb#readme",
   "dependencies": {
     "lowdb": "^3.0.0"
   },

@@ -1,68 +1,52 @@
-import {readdirSync, mkdirSync, existsSync, writeFileSync} from 'fs'
+import {mkdirSync, existsSync} from 'fs'
 import { Low, JSONFile } from 'lowdb'
-
-export async function read(key){
-    var temp = await load()
-    return temp[key].data
-}
-
-export async function write(dbKey,data){
-    var tempDict = await load()
-    if(!tempDict[dbKey]){
-        tempDict = await addKey(dbKey)
-    }
-    tempDict[dbKey].data = data
-    await tempDict[dbKey].write()
-    return true
-}
-async function addKey(key){
-    var easyDir = await getDir()
-    var tempDict = await load()
-    tempDict[key] = new Low(new JSONFile(`${easyDir}/${key}.json`))
-    await tempDict[key].read()
-    tempDict[key].data||={}
-    return tempDict
-}
-
-async function getDir(){
-    const __datadir = `${process.cwd()}/data`
-    if(!existsSync(__datadir)){
-        mkdirSync(__datadir)
-    }
-    var dataDir = await readdirSync(__datadir)
-
-    const __easydir = `${process.cwd()}/data/easy`
-    if(!existsSync(__easydir)){
-        mkdirSync(__easydir)
-    }
-    return __easydir
-}
-
-async function prepDirs(){
-    var easyDir = await getDir()
-    var easyDBFiles = readdirSync(easyDir)
-    easyDBFiles = easyDBFiles.filter(x=>x.includes('.json')).map(y=>`${easyDir}/${y}`)
-    return easyDBFiles
-}
-
-async function load(){
-    var fileList = await prepDirs()
-    var dbList= fileList.map(x=>x = x.split('/').at(-1).split('.')[0])
-    var tempDict = {}
-    if(dbList.length > 0){
-        for(var i=0;i<dbList.length;i++){
-            tempDict[dbList[i]] = new Low(new JSONFile(fileList[i]))
-            await tempDict[dbList[i]].read()
-            tempDict[dbList[i]].data||={}
+export class Easy {
+    constructor (key, dir){
+        this.key = key
+        this.dir = dir || `${process.cwd()}/ez`
+        this.data = {}
+        if(!dir && !existsSync(`${process.cwd()}/ez`)){
+            mkdirSync(`${process.cwd()}/ez`)
         }
     }
-    return tempDict
+    read = async () => {
+        try {
+            var temp = await load(this.key, this.dir)
+            this.data = temp[this.key].data
+
+            if(!this.data.array.length){
+                this.data.array = []
+            }
+            
+            if (!this.data.__dbKey){
+                this.data.__dbKey = this.key
+            }
+        } catch (err){
+            console.log(`easy-lowdb read ${this.key}`, err)
+        }
+        return this
+    }
+    write = async () => {
+        try {
+            var tempDict = await load(this.key, this.dir)
+            tempDict[this.key].data = this.data
+            await tempDict[this.key].write()
+            return true
+        } catch (err){
+            console.log(`easy-lowdb write ${this.key}`, err)
+        }
+    }
 }
 
-export async function help(){
-    console.log(`Automatically creates the folder ${process.cwd()}/data/easy/`)
-    console.log(`Read function only requires a keyword as an arguments`)
-    console.log(`Write function only requires a keyword and data as arguments`)
-    console.log(`EasyDB `)
-
+async function load(key,dir){
+    try {
+        var tempDict = {}
+        tempDict[key] = new Low(new JSONFile(`${dir}/${key}.json`))
+        await tempDict[key].read()
+        tempDict[key].data||={array: [], __dbKey: key}
+        return tempDict
+    } catch(err){
+        console.log(`easy-lowdb load ${this.key}`, err)
+        return null
+    }
 }
