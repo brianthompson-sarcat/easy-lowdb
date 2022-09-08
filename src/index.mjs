@@ -4,7 +4,7 @@ export class Easy {
     constructor (key, dir){
         this.key = key
         this.dir = dir || `${process.cwd()}/ez`
-        this.data = {}
+        this.data||={array: []}
         if(!dir && !existsSync(`${process.cwd()}/ez`)){
             mkdirSync(`${process.cwd()}/ez`)
         }
@@ -13,10 +13,6 @@ export class Easy {
         try {
             var temp = await load(this.key, this.dir)
             this.data = temp[this.key].data
-
-            if(!this.data.array.length){
-                this.data.array = []
-            }
             
             if (!this.data.__dbKey){
                 this.data.__dbKey = this.key

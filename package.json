@@ -1,6 +1,6 @@
 {
   "name": "easy-lowdb",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "main": "src/index.mjs",
   "scripts": {
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/brianthompson-sarcat/easy-lowdb#readme",
   "dependencies": {
+    "@google-cloud/storage": "^6.2.3",
     "lowdb": "^3.0.0"
   },
   "keywords": [
